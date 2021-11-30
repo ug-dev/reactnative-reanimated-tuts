@@ -1,6 +1,8 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
-import InterpolateAnim from './src/InterpolateAnim';
+import SamuraiDesign from './src/SamuraiDesign';
+// import ColorTheme from './src/ColorTheme';
+// import InterpolateAnim from './src/InterpolateAnim';
 // import Begin from './src/Begin';
 // import PanGasture from './src/PanGasture';
 
@@ -9,7 +11,9 @@ const App = () => {
     <SafeAreaView>
       {/* <Begin /> */}
       {/* <PanGasture /> */}
-      <InterpolateAnim />
+      {/* <InterpolateAnim /> */}
+      {/* <ColorTheme /> */}
+      <SamuraiDesign />
     </SafeAreaView>
   );
 };
