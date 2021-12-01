@@ -1,5 +1,6 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SamuraiDesign from './src/SamuraiDesign';
 // import ColorTheme from './src/ColorTheme';
 // import InterpolateAnim from './src/InterpolateAnim';
@@ -8,13 +9,15 @@ import SamuraiDesign from './src/SamuraiDesign';
 
 const App = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView>
+        <SamuraiDesign />
+      </SafeAreaView>
       {/* <Begin /> */}
       {/* <PanGasture /> */}
       {/* <InterpolateAnim /> */}
       {/* <ColorTheme /> */}
-      <SamuraiDesign />
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
