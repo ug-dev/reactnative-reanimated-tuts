@@ -1,9 +1,10 @@
 //import liraries
-import React from 'react';
-import {StyleSheet, View, Text, Dimensions} from 'react-native';
-import SamuraiScreen from './Components/SamuraiScreen';
+import React, {useCallback} from 'react';
+import {StyleSheet, View, Text, Pressable} from 'react-native';
+import SamuraiScreen, {width} from './Components/SamuraiScreen';
 import Arrow from '../src/Components/arrow.svg';
 import Animated, {
+  useAnimatedRef,
   useAnimatedScrollHandler,
   useDerivedValue,
   useSharedValue,
@@ -35,18 +36,29 @@ const WORDS = [
 const SamuraiDesign = () => {
   const translateX = useSharedValue(0);
 
-  // const activeIndex = useDerivedValue(() => {
-  //   return Math.round(translateX.value / Dimensions.get('window').width);
-  // });
   const scrollHander = useAnimatedScrollHandler({
     onScroll: e => {
       translateX.value = e.contentOffset.x;
     },
   });
 
+  const activeDotIndex = useDerivedValue(() => {
+    return Math.round(translateX.value / width);
+  });
+
+  const scrollRef = useAnimatedRef();
+
+  const onIconPress = useCallback(() => {
+    if (activeDotIndex.value === WORDS.length - 1) {
+      return;
+    }
+    scrollRef.current?.scrollTo({x: width * (activeDotIndex.value + 1)});
+  }, [activeDotIndex.value, scrollRef]);
+
   return (
     <View style={styles.main}>
       <Animated.ScrollView
+        ref={scrollRef}
         onScroll={scrollHander}
         horizontal
         pagingEnabled
@@ -70,11 +82,15 @@ const SamuraiDesign = () => {
       <View style={styles.bottom}>
         <Animated.View style={styles.dotContainer}>
           {WORDS.map((_, i) => {
-            return <PaginatorDot index={i} key={i} />;
+            return (
+              <PaginatorDot activeDotIndex={activeDotIndex} index={i} key={i} />
+            );
           })}
         </Animated.View>
         <Text style={styles.text}>View Board</Text>
-        <Arrow />
+        <Pressable style={styles.arrowContainer} onPress={onIconPress}>
+          <Arrow />
+        </Pressable>
       </View>
     </View>
   );
@@ -99,9 +115,13 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     textTransform: 'uppercase',
-    color: '#535353',
+    color: '#4C4D53',
     fontFamily: 'Lato-Bold',
     textAlign: 'center',
+  },
+  arrowContainer: {
+    height: '100%',
+    justifyContent: 'center',
   },
 });
 

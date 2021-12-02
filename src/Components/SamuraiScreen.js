@@ -1,6 +1,6 @@
 //import liraries
 import React from 'react';
-import {View, Text, StyleSheet, Dimensions, Image} from 'react-native';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import Animated, {
   Extrapolate,
   interpolate,
@@ -33,7 +33,7 @@ const SamuraiScreen = ({Title, Desc, Index, ImageUrl, TranslateX}) => {
 
     return {
       opacity,
-      transform: [{rotate: `${rotate * Math.PI}rad`}],
+      transform: [{rotate: `${rotate * 1.5}rad`}],
     };
   });
 
@@ -59,6 +59,7 @@ const SamuraiScreen = ({Title, Desc, Index, ImageUrl, TranslateX}) => {
       <View style={styles.topSection}>
         <Animated.View style={[styles.circle, rCircleStyle]} />
         <Animated.Image
+          resizeMode="contain"
           style={[styles.image, rotateXStyle]}
           source={ImageUrl}
         />
@@ -87,10 +88,11 @@ const styles = StyleSheet.create({
     borderRadius: SIZE / 2,
   },
   image: {
-    height: width + 12,
+    height: width,
     width: width * 0.3,
   },
   topSection: {
+    height: width,
     width,
     marginTop: 20,
     justifyContent: 'center',
@@ -98,7 +100,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 44,
-    color: '#535353',
+    color: '#4C4D53',
     fontFamily: 'Lobster-Regular',
   },
   desc: {
@@ -116,6 +118,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+export {width};
 
 //make this component available to the app
 export default SamuraiScreen;
